@@ -59,13 +59,14 @@ export const goToPage = (newPage, data) => {
           page = POSTS_PAGE;
           posts = newPosts;
           renderApp();
-        })
-        .catch((error) => {
+         })
+          .catch((error) => {
           console.error(error);
           goToPage(POSTS_PAGE);
         });
     }
 
+    
     if (newPage === USER_POSTS_PAGE) {
       // TODO: реализовать получение постов юзера из API
       console.log("Открываю страницу пользователя: ", data.userId);
