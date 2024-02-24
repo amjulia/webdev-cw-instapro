@@ -1,22 +1,53 @@
+import { renderHeaderComponent } from "./header-component.js";
+import { renderUploadImageComponent } from "./upload-image-component.js";
+let imageUrl = "";
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
     // TODO: Реализовать страницу добавления поста
     const appHtml = `
     <div class="page-container">
       <div class="header-container"></div>
-      Cтраница добавления поста
-      <button class="button" id="add-button">Добавить</button>
-    </div>
+      <h3 class="form-title">Добавить пост</h3>
+    <div class = form-inputs> 
+       
+          <div class="file-upload-image-conrainer">
+            
+             <label class="file-upload-label secondary-button add-post">
+                <input type="file" class="file-upload-input" style="display:none"/>
+                Выберите фото
+             </label>
+             
+          </div>
+         
+        <p>Опишите фотографию:</p>
+          <input type="text"  class="input-comment">
+          <button class="button" id="add-button">Добавить</button>
+      </div>
+    </div>  
   `;
 
     appEl.innerHTML = appHtml;
 
-    document.getElementById("add-button").addEventListener("click", () => {
-      onAddPostClick({
-        description: "Описание картинки",
-        imageUrl: "https://image.png",
-      });
+    renderHeaderComponent({
+      element: document.querySelector(".header-container"),
     });
+
+    const elElement = document.querySelector(".file-upload-image-conrainer");
+    console.log(elElement);
+      renderUploadImageComponent({
+        element: elElement,
+        onImageUrlChange(newImageUrl){
+          imageUrl = newImageUrl
+      },
+     })
+
+    document.getElementById("add-button").addEventListener("click", () => {
+      const inputComment = document.querySelector(".input-comment");
+      onAddPostClick({
+        description: inputComment.value,
+        imageUrl: imageUrl,
+      });
+      });
   };
 
   render();

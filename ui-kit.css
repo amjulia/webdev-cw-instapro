@@ -52,6 +52,7 @@ p {
   background-color: #565eef;
   color: #ffffff;
   border: none;
+  width: 100%;
 }
 
 .link-button {
@@ -91,7 +92,7 @@ p {
   background-color: #d8d7ff;
 }
 
-.input {
+.input, .input-comment {
   height: 36px;
   box-sizing: border-box;
   padding: 15px;
@@ -102,12 +103,15 @@ p {
   border-radius: 5px;
   background-color: #e8e8e8;
 }
+.input-comment{
+  height: 100px;
+}
 
 .input .-error {
   background-color: #fff;
 }
 
-.input:focus {
+.input:focus, .input-comment:focus {
   background-color: #fff;
 }
 

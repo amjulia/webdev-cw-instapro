@@ -5,7 +5,7 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
 
   const render = () => {
     element.innerHTML = `
-  <div class="upload=image">
+  
       ${
         imageUrl
           ? `
@@ -26,7 +26,8 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
           
       `
       }
-  </div>
+ 
+ 
 `;
 
     const fileInputElement = element.querySelector(".file-upload-input");

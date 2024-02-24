@@ -195,4 +195,22 @@
   box-sizing: border-box;
   width: 100%;
   text-align: center;
+  
+}
+.add-post{
+  margin-bottom: 10px;
+  
+}
+.form-title{
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+}
+.input-comment{
+  padding: 15px;
+  resize: none;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 15px;
+  
 }
