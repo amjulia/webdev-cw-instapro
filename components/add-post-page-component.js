@@ -33,8 +33,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     });
 
     const elElement = document.querySelector(".file-upload-image-conrainer");
-    console.log(elElement);
-      renderUploadImageComponent({
+        renderUploadImageComponent({
         element: elElement,
         onImageUrlChange(newImageUrl){
           imageUrl = newImageUrl
