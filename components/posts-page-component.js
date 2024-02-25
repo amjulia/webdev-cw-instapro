@@ -26,9 +26,7 @@ export function renderPostsPageComponent({ appEl }) {
    */
   const appHtml = appPosts.map((post, index) => {
     return `
-    <div class="page-container">
-      <div class="header-container"></div>
-      <ul class="posts">
+    
         <li class="post" data-index=${index}>
           <div class="post-header" data-user-id=${post.userId}>
               <img src=${post.userImageUrl} class="post-header__user-image">
@@ -53,12 +51,19 @@ export function renderPostsPageComponent({ appEl }) {
             ${post.createdAt}
           </p>
         </li>
-        </ul>
-    </div>`;
+      `;
   })
   
-
-  appEl.innerHTML = appHtml;
+  const conrainerHtml = `
+  <div class="page-container">
+      <div class="header-container">
+      </div>
+        <ul class="posts">
+        ${appHtml}
+        </ul>
+  </div>
+  `
+  appEl.innerHTML = conrainerHtml;
 
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
