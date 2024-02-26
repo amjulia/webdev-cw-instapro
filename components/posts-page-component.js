@@ -2,13 +2,14 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
 
+
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
   console.log("Актуальный список постов:", posts);
   const appPosts = posts.map((post) => {
     return {
       id: post.id,
-      createdAt: new Date(),
+      createdAt: (new Date(post.createdAt)),
       description: post.description,
       imageUrl: post.imageUrl,
       isLiked: post.isLiked,
@@ -71,7 +72,7 @@ export function renderPostsPageComponent({ appEl }) {
 
   for (let userEl of document.querySelectorAll(".post-header")) {
     userEl.addEventListener("click", () => {
-      goToPage(USER_POSTS_PAGE, {
+        goToPage(USER_POSTS_PAGE, {
         userId: userEl.dataset.userId,
       });
     });
