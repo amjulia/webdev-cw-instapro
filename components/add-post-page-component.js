@@ -1,5 +1,6 @@
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
+import { sanitazedHtml } from "../helpers.js";
 let imageUrl = "";
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
@@ -43,7 +44,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     document.getElementById("add-button").addEventListener("click", () => {
       const inputComment = document.querySelector(".input-comment");
       onAddPostClick({
-        description: inputComment.value,
+        description: sanitazedHtml(inputComment.value),
         imageUrl: imageUrl,
       });
       });

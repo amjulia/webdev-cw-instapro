@@ -5,7 +5,7 @@ import { posts, goToPage } from "../index.js";
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
-  console.log("Актуальный список постов:", posts);
+ // console.log("Актуальный список постов:", posts);
   const appPosts = posts.map((post) => {
     return {
       id: post.id,
