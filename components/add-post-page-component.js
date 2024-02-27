@@ -40,9 +40,25 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
           imageUrl = newImageUrl
       },
      })
+     const inputComment = document.querySelector(".input-comment");
 
+     inputComment.addEventListener("click", () => {
+      inputComment.style.backgroundColor = "white";
+      inputComment.value = "";
+     })
+    
     document.getElementById("add-button").addEventListener("click", () => {
-      const inputComment = document.querySelector(".input-comment");
+      
+      if (!imageUrl) {
+        alert("Не выбрана фотография");
+        return;
+      }
+      if (inputComment.value === "") {
+        inputComment.style.backgroundColor = "pink";
+        inputComment.value = "Добавьте описание"
+          return;
+      }
+   
       onAddPostClick({
         description: sanitazedHtml(inputComment.value),
         imageUrl: imageUrl,
@@ -51,4 +67,5 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   };
 
   render();
+  imageUrl = "";
 }

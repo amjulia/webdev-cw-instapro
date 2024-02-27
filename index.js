@@ -122,6 +122,10 @@ const renderApp = () => {
       onAddPostClick({ description, imageUrl }) {
         addPost({ token: getToken(), description, imageUrl }).then(() => {
           goToPage(POSTS_PAGE);
+        }).catch((error) =>{
+          if (error.message === "Нет фото или комментария") {
+              alert("Нет фото или комментария")
+          }
         });
         // TODO: реализовать добавление поста в API
         //  console.log("Добавляю пост...", { description, imageUrl });
