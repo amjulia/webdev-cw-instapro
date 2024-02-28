@@ -62,6 +62,19 @@ export const addPost = ({ token, description, imageUrl }) => {
     })
 }
 
+export function deletePost({token, id }) {
+  return fetch(`${postsHost}/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    if (response.status === 401) {
+      throw new Error("Неавторизованные пользователи не могут удалить пост");
+    }
+    return response.json();
+  });
+}
 export const likePost = ({ token, id }) => {
   return fetch(`${postsHost}/${id}/like`, {
     method: "POST",
