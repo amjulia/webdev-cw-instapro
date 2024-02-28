@@ -1,15 +1,15 @@
-import { USER_POSTS_PAGE } from "../routes.js";
+import { POSTS_PAGE, USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
-
+import { posts, goToPage, getToken, page, renderApp} from "../index.js";
+import { likePost, getPosts, deleteLikeOnPost } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
- // console.log("Актуальный список постов:", posts);
+  console.log("Актуальный список постов:", posts);
   const appPosts = posts.map((post) => {
     return {
       id: post.id,
-      createdAt: (new Date(post.createdAt)),
+      createdAt: new Date(post.createdAt),
       description: post.description,
       imageUrl: post.imageUrl,
       isLiked: post.isLiked,
@@ -17,7 +17,7 @@ export function renderPostsPageComponent({ appEl }) {
       userId: post.user.id,
       userName: post.user.name,
       userImageUrl: post.user.imageUrl,
-      userLogin: post.user.login
+      userLogin: post.user.login,
     };
   });
 
@@ -37,11 +37,21 @@ export function renderPostsPageComponent({ appEl }) {
             <img class="post-image" src=${post.imageUrl}>
           </div>
           <div class="post-likes">
-            <button class="like-button" data-post-id=${post.id} data-like=${post.isLiked ? 'true' : ''} >
-              <img src=${post.isLiked ? `./assets/images/like-active.svg` : `./assets/images/like-not-active.svg` }>
+            <button class="like-button" data-post-id=${post.id} data-like=${
+      post.isLiked ? "true" : ""
+    } >
+              <img src=${
+                post.isLiked
+                  ? `./assets/images/like-active.svg`
+                  : `./assets/images/like-not-active.svg`
+              }>
             </button>
             <p class="post-likes-text">
-              Нравится: <strong>${post.likes.length >= 1 ? post.likes[0].name : '0'}</strong>${(post.likes.length-1) > 0 ?  ' и еще' + ' '+ (post.likes.length-1) :''}
+              Нравится: <strong>${
+                post.likes.length >= 1 ? post.likes[0].name : "0"
+              }</strong>${
+      post.likes.length - 1 > 0 ? " и еще" + " " + (post.likes.length - 1) : ""
+    }
             </p>
           </div>
           <p class="post-text">
@@ -53,8 +63,8 @@ export function renderPostsPageComponent({ appEl }) {
           </p>
         </li>
       `;
-  })
-  
+  });
+
   const conrainerHtml = `
   <div class="page-container">
       <div class="header-container">
@@ -63,7 +73,7 @@ export function renderPostsPageComponent({ appEl }) {
         ${appHtml}
         </ul>
   </div>
-  `
+  `;
   appEl.innerHTML = conrainerHtml;
 
   renderHeaderComponent({
@@ -72,9 +82,42 @@ export function renderPostsPageComponent({ appEl }) {
 
   for (let userEl of document.querySelectorAll(".post-header")) {
     userEl.addEventListener("click", () => {
-        goToPage(USER_POSTS_PAGE, {
+      goToPage(USER_POSTS_PAGE, {
         userId: userEl.dataset.userId,
       });
     });
   }
+  initLikeListeners();
 }
+
+function initLikeListeners() {
+  const likeButtons = document.querySelectorAll(".like-button");
+  likeButtons.forEach((likeButton, index) => {
+    likeButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const id = likeButton.dataset.postId;
+      if (posts[index].isLiked){
+        deleteLikeOnPost({token: getToken(), id})
+          .then(() => {
+            posts[index].isLiked === false;
+            
+           // renderApp();
+           goToPage(page, {
+            userId: posts[index].user.id,
+          });  
+          })
+      } else {
+              likePost({token: getToken(), id})
+                  .then(() => {
+                    posts[index].isLiked === true;
+                //  renderPostsPageComponent({appEl: document.getElementById("app")})
+               // (page === USER_POSTS_PAGE) ? goToPage(USER_POSTS_PAGE) : goToPage(POSTS_PAGE);
+                 //   renderApp();
+                 goToPage(page, {
+                  userId: posts[index].user.id,
+                }); 
+              })
+              }
+          
+  });
+})}
