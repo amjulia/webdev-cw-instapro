@@ -76,7 +76,7 @@ export const goToPage = (newPage, data) => {
       renderApp();
 
       // TODO: реализовать получение постов юзера из API
-     console.log("Открываю страницу пользователя: ", data.userId);
+     //console.log("Открываю страницу пользователя: ", data.userId);
       return getUserPosts({ token: getToken(), userId: data.userId })
       
         .then((newPosts) => {

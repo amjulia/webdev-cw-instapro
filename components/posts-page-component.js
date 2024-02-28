@@ -6,8 +6,8 @@ import {
   getToken,
   setPosts,
   page,
-  renderApp,
-} from "../index.js";
+  user
+  } from "../index.js";
 import { likePost, getPosts, deleteLikeOnPost, deletePost } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
@@ -34,8 +34,7 @@ export function renderPostsPageComponent({ appEl }) {
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
   const appHtml = appPosts.map((post, index) => {
-    console.log(`postUserId ${post.userId}`);
-    console.log(`postid ${post.id}`);
+        
     return `
     
         <li class="post" data-index=${index}>
@@ -69,10 +68,9 @@ export function renderPostsPageComponent({ appEl }) {
             </p>
             
           </div>
-          <div class="post-delete"  data-index=${post.index} data-id=${post.id}>
-         
-          <p class="${post.userId ? "post-delete" : "post-delete-none"}" 
-          }">Удалить</p>
+          <div>
+          <p data-id=${post.id} class="${post.userId === user?._id ? "post-delete" : "post-delete-none" }">Удалить</p> 
+        
 
           </div>
           </div>
@@ -120,12 +118,12 @@ function initDeletePost() {
   for (const deleteButton of deleteButtons) {
     deleteButton.addEventListener("click", (event) => {
       event.stopPropagation();
-
+      console.log(page);
       const id = deleteButton.dataset.id;
-      console.log(id);
-
+    console.log(deleteButton.dataset.id);
       deletePost({ token: getToken(), id }).then(() => {
-        goToPage(page, { userId: deleteButton.dataset.userId });
+        
+        goToPage(page, { userId: posts[0].user.id });
       });
     });
   }

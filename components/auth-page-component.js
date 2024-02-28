@@ -99,6 +99,7 @@ export function renderAuthPageComponent({ appEl, setUser }) {
         })
           .then((user) => {
             setUser(user.user);
+            
           })
           .catch((error) => {
             console.warn(error);
