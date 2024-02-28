@@ -99,8 +99,8 @@ function initLikeListeners() {
       if (posts[index].isLiked){
         deleteLikeOnPost({token: getToken(), id})
           .then(() => {
-            posts[index].isLiked === false;
-            
+            posts[index].isLiked === !posts[index].isLiked;
+           // renderPostsPageComponent({appEl: document.getElementById("app")})
            // renderApp();
            goToPage(page, {
             userId: posts[index].user.id,
@@ -109,10 +109,9 @@ function initLikeListeners() {
       } else {
               likePost({token: getToken(), id})
                   .then(() => {
-                    posts[index].isLiked === true;
-                //  renderPostsPageComponent({appEl: document.getElementById("app")})
-               // (page === USER_POSTS_PAGE) ? goToPage(USER_POSTS_PAGE) : goToPage(POSTS_PAGE);
-                 //   renderApp();
+                    posts[index].isLiked === !posts[index].isLiked;
+                 // renderPostsPageComponent({appEl: document.getElementById("app")})
+                //  renderApp();
                  goToPage(page, {
                   userId: posts[index].user.id,
                 }); 
