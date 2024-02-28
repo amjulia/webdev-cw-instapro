@@ -1,6 +1,6 @@
-import { POSTS_PAGE, USER_POSTS_PAGE } from "../routes.js";
+import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage, getToken, page, renderApp} from "../index.js";
+import { posts, goToPage, getToken, setPosts} from "../index.js";
 import { likePost, getPosts, deleteLikeOnPost } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
@@ -98,23 +98,25 @@ function initLikeListeners() {
       const id = likeButton.dataset.postId;
       if (posts[index].isLiked){
         deleteLikeOnPost({token: getToken(), id})
-          .then(() => {
+          .then((responseData) => {
             posts[index].isLiked === !posts[index].isLiked;
-           // renderPostsPageComponent({appEl: document.getElementById("app")})
+            setPosts(responseData)
+            renderPostsPageComponent({appEl: document.getElementById("app")})
            // renderApp();
-           goToPage(page, {
-            userId: posts[index].user.id,
-          });  
+          //  goToPage(page, {
+          //   userId: posts[index].user.id,
+          // });  
           })
       } else {
               likePost({token: getToken(), id})
-                  .then(() => {
+                  .then((responseData) => {
                     posts[index].isLiked === !posts[index].isLiked;
-                 // renderPostsPageComponent({appEl: document.getElementById("app")})
+                    setPosts(responseData)
+                  renderPostsPageComponent({appEl: document.getElementById("app")})
                 //  renderApp();
-                 goToPage(page, {
-                  userId: posts[index].user.id,
-                }); 
+                //  goToPage(page, {
+                //   userId: posts[index].user.id,
+                // }); 
               })
               }
           
