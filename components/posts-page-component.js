@@ -8,16 +8,20 @@ import {
   page,
   user
   } from "../index.js";
-import { likePost, getPosts, deleteLikeOnPost, deletePost } from "../api.js";
+import { likePost, deleteLikeOnPost, deletePost } from "../api.js";
+import { formatDistanceToNow } from "date-fns"
+import { ru } from "date-fns/locale";
+
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
   console.log("Актуальный список постов:", posts);
 
   const appPosts = posts.map((post) => {
+    const date = new Date(post.createdAt);
     return {
       id: post.id,
-      createdAt: new Date(post.createdAt),
+      createdAt: formatDistanceToNow(date, {addSuffix: true, locale: ru}),
       description: post.description,
       imageUrl: post.imageUrl,
       isLiked: post.isLiked,
@@ -84,7 +88,7 @@ export function renderPostsPageComponent({ appEl }) {
       
         </li>
       `;
-  });
+  }).join('');
 
   const conrainerHtml = `
   <div class="page-container">
