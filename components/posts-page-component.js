@@ -31,7 +31,6 @@ export function renderPostsPageComponent({ appEl }) {
    */
   const appHtml = appPosts
     .map((post, index) => {
-      console.log(user._id);
       return `
     
         <li class="post" data-index=${index}>
@@ -67,7 +66,7 @@ export function renderPostsPageComponent({ appEl }) {
           </div>
           <div>
           <p data-id=${post.id} class="${
-        post.userId === user._id ? "post-delete" : "post-delete-none"
+        post.userId === user?._id ? "post-delete" : "post-delete-none"
       }">Удалить</p> 
         
 
@@ -120,8 +119,7 @@ function initDeletePost() {
       event.stopPropagation();
       console.log(page);
       const id = deleteButton.dataset.id;
-      console.log(deleteButton.dataset.id);
-      deletePost({ token: getToken(), id }).then(() => {
+        deletePost({ token: getToken(), id }).then(() => {
         goToPage(page, { userId: posts[0].user.id });
       });
     });
