@@ -52,17 +52,16 @@ export const addPost = ({ token, description, imageUrl }) => {
     headers: {
       Authorization: token,
     },
-  })
-    .then((response) => {
-      if (response.status === 400) {
-        throw new Error("Нет фото или комментария");
-      }
+  }).then((response) => {
+    if (response.status === 400) {
+      throw new Error("Нет фото или комментария");
+    }
 
-      return response.json();
-    })
-}
+    return response.json();
+  });
+};
 
-export function deletePost({token, id }) {
+export function deletePost({ token, id }) {
   return fetch(`${postsHost}/${id}`, {
     method: "DELETE",
     headers: {
@@ -81,15 +80,14 @@ export const likePost = ({ token, id }) => {
     headers: {
       Authorization: token,
     },
-  })
-    .then((response) => {
-      if (response.status === 401) {
-        throw new Error("Неавторизованные пользователи не могут ставить лайки");
-      }
+  }).then((response) => {
+    if (response.status === 401) {
+      throw new Error("Неавторизованные пользователи не могут ставить лайки");
+    }
 
-      return response.json();
-    })
-}
+    return response.json();
+  });
+};
 
 export const deleteLikeOnPost = ({ token, id }) => {
   return fetch(`${postsHost}/${id}/dislike`, {
@@ -97,15 +95,14 @@ export const deleteLikeOnPost = ({ token, id }) => {
     headers: {
       Authorization: token,
     },
-  })
-    .then((response) => {
-      if (response.status === 401) {
-        throw new Error("Нет авторизации");
-      }
+  }).then((response) => {
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
+    }
 
-      return response.json();
-    })
-}
+    return response.json();
+  });
+};
 
 // https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
 export function registerUser({ login, password, name, imageUrl }) {

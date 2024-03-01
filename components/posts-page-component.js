@@ -1,17 +1,9 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import {
-  posts,
-  goToPage,
-  getToken,
-  setPosts,
-  page,
-  user
-  } from "../index.js";
+import { posts, goToPage, getToken, setPosts, page, user } from "../index.js";
 import { likePost, deleteLikeOnPost, deletePost } from "../api.js";
-import { formatDistanceToNow } from "date-fns"
+import { formatDistanceToNow } from "date-fns";
 import { ru } from "date-fns/locale";
-
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
@@ -21,7 +13,7 @@ export function renderPostsPageComponent({ appEl }) {
     const date = new Date(post.createdAt);
     return {
       id: post.id,
-      createdAt: formatDistanceToNow(date, {addSuffix: true, locale: ru}),
+      createdAt: formatDistanceToNow(date, { addSuffix: true, locale: ru }),
       description: post.description,
       imageUrl: post.imageUrl,
       isLiked: post.isLiked,
@@ -37,9 +29,10 @@ export function renderPostsPageComponent({ appEl }) {
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
-  const appHtml = appPosts.map((post, index) => {
-        
-    return `
+  const appHtml = appPosts
+    .map((post, index) => {
+      console.log(user._id);
+      return `
     
         <li class="post" data-index=${index}>
           <div class="post-header" data-user-id=${post.userId}>
@@ -52,8 +45,8 @@ export function renderPostsPageComponent({ appEl }) {
          <div class="like-delete-container">
           <div class="post-likes">
             <button class="like-button" data-post-id=${post.id} data-like=${
-      post.isLiked ? "true" : ""
-    } >
+        post.isLiked ? "true" : ""
+      } >
               <img src=${
                 post.isLiked
                   ? `./assets/images/like-active.svg`
@@ -73,7 +66,9 @@ export function renderPostsPageComponent({ appEl }) {
             
           </div>
           <div>
-          <p data-id=${post.id} class="${post.userId === user?._id ? "post-delete" : "post-delete-none" }">Удалить</p> 
+          <p data-id=${post.id} class="${
+        post.userId === user._id ? "post-delete" : "post-delete-none"
+      }">Удалить</p> 
         
 
           </div>
@@ -88,10 +83,11 @@ export function renderPostsPageComponent({ appEl }) {
       
         </li>
       `;
-  }).join('');
+    })
+    .join("");
 
   const conrainerHtml = `
-  <div class="page-container">
+  <div class="page-container center">
       <div class="header-container">
       </div>
         <ul class="posts">
@@ -124,9 +120,8 @@ function initDeletePost() {
       event.stopPropagation();
       console.log(page);
       const id = deleteButton.dataset.id;
-    console.log(deleteButton.dataset.id);
+      console.log(deleteButton.dataset.id);
       deletePost({ token: getToken(), id }).then(() => {
-        
         goToPage(page, { userId: posts[0].user.id });
       });
     });
@@ -137,13 +132,14 @@ function initLikeListeners() {
   likeButtons.forEach((likeButton, index) => {
     likeButton.addEventListener("click", (event) => {
       event.stopPropagation();
-
+      likeButton.classList.add("active-like");
       const id = likeButton.dataset.postId;
 
       if (posts[index].isLiked) {
         deleteLikeOnPost({ token: getToken(), id }).then((responseData) => {
           posts[index] = responseData.post;
           setPosts(posts);
+          likeButton.classList.remove("active-like");
           renderPostsPageComponent({ appEl: document.getElementById("app") });
         });
       } else {
@@ -151,7 +147,7 @@ function initLikeListeners() {
           posts[index] = responseData.post;
 
           setPosts(posts);
-
+          likeButton.classList.remove("active-like");
           renderPostsPageComponent({ appEl: document.getElementById("app") });
         });
       }

@@ -19,9 +19,9 @@
   src: url("./assets/fonts/stratosskyengweb-medium.woff2") format("woff2");
 }
 
-  /* html { */
-  /* скрывает скролбары в firefox */
-  /* scrollbar-width: none;
+/* html { */
+/* скрывает скролбары в firefox */
+/* scrollbar-width: none;
 }   */
 
 body {
@@ -34,16 +34,16 @@ body {
 }
 
 html::-webkit-scrollbar {
-  width: 20px; 
+  width: 20px;
 }
 
 html::-webkit-scrollbar-track {
-background-color: #d1cdcd;;
+  background-color: #d1cdcd;
 }
 
 html::-webkit-scrollbar-thumb {
-background: #747373;
-border-radius: 25px;
+  background: #747373;
+  border-radius: 25px;
 }
 
 /* скрывает скролбары в chrome */
@@ -105,7 +105,8 @@ p {
   background-color: #d8d7ff;
 }
 
-.input, .input-comment {
+.input,
+.input-comment {
   height: 36px;
   box-sizing: border-box;
   padding: 15px;
@@ -116,7 +117,7 @@ p {
   border-radius: 5px;
   background-color: #e8e8e8;
 }
-.input-comment{
+.input-comment {
   height: 100px;
 }
 
@@ -124,7 +125,8 @@ p {
   background-color: #fff;
 }
 
-.input:focus, .input-comment:focus {
+.input:focus,
+.input-comment:focus {
   background-color: #fff;
 }
 
@@ -177,5 +179,3 @@ strong {
     height: 32px;
   }
 }
-
-

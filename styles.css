@@ -1,3 +1,13 @@
+@keyframes animateHeart{
+  0%{transform:scale(.2);}
+  40%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
+
+@keyframes animateHeartOut{
+  0%{transform:scale(1.4);}
+  100%{transform:scale(1);}
+}
 
 .center {
   padding-left: calc(50% - 500px);
@@ -73,9 +83,9 @@
 
 .post-image-container {
   margin-left: -20px;
-  margin-right: -20;
+  margin-right: -20px;
  border-radius: 20px;
-  height: 500px;
+ height: 500px;
   display: flex;
   justify-content: center;
   background-color: #e0e0e0;
@@ -101,6 +111,9 @@
   padding-left: 0px;
   padding-bottom: 5px;
   cursor: pointer;
+}
+.active-like{
+  animation: animateHeartOut 2s linear;
 }
 
 .user-name {

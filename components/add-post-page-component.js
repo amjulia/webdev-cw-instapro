@@ -34,36 +34,35 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     });
 
     const elElement = document.querySelector(".file-upload-image-conrainer");
-        renderUploadImageComponent({
-        element: elElement,
-        onImageUrlChange(newImageUrl){
-          imageUrl = newImageUrl
+    renderUploadImageComponent({
+      element: elElement,
+      onImageUrlChange(newImageUrl) {
+        imageUrl = newImageUrl;
       },
-     })
-     const inputComment = document.querySelector(".input-comment");
+    });
+    const inputComment = document.querySelector(".input-comment");
 
-     inputComment.addEventListener("click", () => {
+    inputComment.addEventListener("click", () => {
       inputComment.style.backgroundColor = "white";
       inputComment.value = "";
-     })
-    
+    });
+
     document.getElementById("add-button").addEventListener("click", () => {
-      
       if (!imageUrl) {
         alert("Не выбрана фотография");
         return;
       }
       if (inputComment.value === "") {
         inputComment.style.backgroundColor = "pink";
-        inputComment.value = "Добавьте описание"
-          return;
+        inputComment.value = "Добавьте описание";
+        return;
       }
-   
+
       onAddPostClick({
         description: sanitazedHtml(inputComment.value),
         imageUrl: imageUrl,
       });
-      });
+    });
   };
 
   render();
