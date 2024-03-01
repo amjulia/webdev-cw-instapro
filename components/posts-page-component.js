@@ -69,7 +69,6 @@ export function renderPostsPageComponent({ appEl }) {
         post.userId === user?._id ? "post-delete" : "post-delete-none"
       }">Удалить</p> 
         
-
           </div>
           </div>
           <p class="post-text">
