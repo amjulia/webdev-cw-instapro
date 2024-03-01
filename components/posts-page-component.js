@@ -118,7 +118,7 @@ function initDeletePost() {
       event.stopPropagation();
       console.log(page);
       const id = deleteButton.dataset.id;
-        deletePost({ token: getToken(), id }).then(() => {
+      deletePost({ token: getToken(), id }).then(() => {
         goToPage(page, { userId: posts[0].user.id });
       });
     });

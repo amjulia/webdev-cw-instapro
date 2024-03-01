@@ -2,8 +2,7 @@ import { getPosts, addPost, getUserPosts } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
-  ADD_POSTS_PAGE,
-  AUTH_PAGE,
+  ADD_POSTS_PAGE, AUTH_PAGE,
   LOADING_PAGE,
   POSTS_PAGE,
   USER_POSTS_PAGE,
@@ -21,8 +20,8 @@ export let page = null;
 export let posts = [];
 
 export const setPosts = (newPosts) => {
-posts = newPosts
-}
+  posts = newPosts;
+};
 
 export const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
@@ -39,7 +38,6 @@ export const logout = () => {
  * Включает страницу приложения
  */
 export const goToPage = (newPage, data) => {
-  
   if (
     [
       POSTS_PAGE,
@@ -76,9 +74,8 @@ export const goToPage = (newPage, data) => {
       renderApp();
 
       // TODO: реализовать получение постов юзера из API
-     //console.log("Открываю страницу пользователя: ", data.userId);
+      //console.log("Открываю страницу пользователя: ", data.userId);
       return getUserPosts({ token: getToken(), userId: data.userId })
-      
         .then((newPosts) => {
           page = USER_POSTS_PAGE;
           posts = newPosts;
@@ -99,7 +96,7 @@ export const goToPage = (newPage, data) => {
   throw new Error("страницы не существует");
 };
 
-export function renderApp  ()  {
+export function renderApp() {
   const appEl = document.getElementById("app");
   if (page === LOADING_PAGE) {
     return renderLoadingPageComponent({
@@ -126,13 +123,15 @@ export function renderApp  ()  {
     return renderAddPostPageComponent({
       appEl,
       onAddPostClick({ description, imageUrl }) {
-        addPost({ token: getToken(), description, imageUrl }).then(() => {
-          goToPage(POSTS_PAGE);
-        }).catch((error) =>{
-          if (error.message === "Нет фото или комментария") {
-              alert("Нет фото или комментария")
-          }
-        });
+        addPost({ token: getToken(), description, imageUrl })
+          .then(() => {
+            goToPage(POSTS_PAGE);
+          })
+          .catch((error) => {
+            if (error.message === "Нет фото или комментария") {
+              alert("Нет фото или комментария");
+            }
+          });
         // TODO: реализовать добавление поста в API
         //  console.log("Добавляю пост...", { description, imageUrl });
       },
@@ -140,8 +139,8 @@ export function renderApp  ()  {
   }
 
   if (page === POSTS_PAGE) {
-     return renderPostsPageComponent({
-      appEl
+    return renderPostsPageComponent({
+      appEl,
     });
   }
 
@@ -151,6 +150,6 @@ export function renderApp  ()  {
 
     return renderPostsPageComponent({ appEl });
   }
-};
+}
 
 goToPage(POSTS_PAGE);
