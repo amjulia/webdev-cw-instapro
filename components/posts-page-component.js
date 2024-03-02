@@ -84,7 +84,7 @@ export function renderPostsPageComponent({ appEl }) {
     })
     .join("");
 
-  const conrainerHtml = `
+  const containerHtml = `
   <div class="page-container center">
       <div class="header-container">
       </div>
@@ -93,7 +93,7 @@ export function renderPostsPageComponent({ appEl }) {
         </ul>
   </div>
   `;
-  appEl.innerHTML = conrainerHtml;
+  appEl.innerHTML = containerHtml;
 
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
@@ -116,9 +116,8 @@ function initDeletePost() {
   for (const deleteButton of deleteButtons) {
     deleteButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      console.log(page);
-      const id = deleteButton.dataset.id;
-      deletePost({ token: getToken(), id }).then(() => {
+        const id = deleteButton.dataset.id;
+          deletePost({ token: getToken(), id }).then(() => {
         goToPage(page, { userId: posts[0].user.id });
       });
     });
@@ -129,6 +128,7 @@ function initLikeListeners() {
   likeButtons.forEach((likeButton, index) => {
     likeButton.addEventListener("click", (event) => {
       event.stopPropagation();
+
       likeButton.classList.add("active-like");
       const id = likeButton.dataset.postId;
 
@@ -142,7 +142,6 @@ function initLikeListeners() {
       } else {
         likePost({ token: getToken(), id }).then((responseData) => {
           posts[index] = responseData.post;
-
           setPosts(posts);
           likeButton.classList.remove("active-like");
           renderPostsPageComponent({ appEl: document.getElementById("app") });
